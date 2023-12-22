@@ -9,13 +9,8 @@ fn main() {
     let numbers = make_hashmap();
 
     let mut total = 0;
-    let mut i = 0;
     for line in input.lines() {
-        i += 1;
-        total += parse_numbers(i, line, numbers.clone());
-        if total > 100 {
-            break;
-        }
+        total += parse_numbers(line, numbers.clone());
     }
     println!("The output is {}", total);
 }
@@ -38,7 +33,7 @@ fn concat_digits(x: u32, y: u32) -> u32 {
     return x * 10 + y;
 }
 
-fn parse_numbers(i: i32, input: &str, numbers: HashMap<String, u32>) -> u32 {
+fn parse_numbers(input: &str, numbers: HashMap<String, u32>) -> u32 {
     let mut first = 0;
     let mut last = 0;
     let mut buffer = String::new();
@@ -74,11 +69,10 @@ fn parse_numbers(i: i32, input: &str, numbers: HashMap<String, u32>) -> u32 {
                 }
             }
             if !flag {
-                buffer.clear();
-                buffer.push(c);
+                buffer.remove(0);
             }
         }
     }
-    println!("{} {} {}", i, first, last);
+    println!("{} {}", first, last);
     return concat_digits(first, last); 
 }
